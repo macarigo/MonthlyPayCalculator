@@ -4,7 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
-public class MonthlySalaryCalculator {
+public class MonthlyPayCalculator {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -13,6 +13,7 @@ public class MonthlySalaryCalculator {
         int month;
         double hourlyRate;
         int hoursPerDay;
+        double extraHours;
 
         try {
             System.out.println("Enter the year: ");
@@ -39,8 +40,12 @@ public class MonthlySalaryCalculator {
                 throw new IllegalArgumentException("Invalid worked hours per day. Please insert a number between 0 and 24");
             }
 
-            SalaryCalculator salaryCalculator = new SalaryCalculator(hoursPerDay, hourlyRate);
-            double totalPay = salaryCalculator.calculateMonthlyPay(year, month);
+            System.out.println("How many hours were worked additionally or deducted: ");
+            extraHours = scanner.nextDouble();
+
+
+            PayCalculator payCalculator = new PayCalculator(hoursPerDay, hourlyRate, extraHours);
+            double totalPay = payCalculator.calculateMonthlyPay(year, month);
 
             Month currentMonth = Month.fromInt(month);
 
