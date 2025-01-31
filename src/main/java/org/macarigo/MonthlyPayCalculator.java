@@ -1,6 +1,9 @@
 package org.macarigo;
 
+import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -14,6 +17,7 @@ public class MonthlyPayCalculator {
         double hourlyRate;
         int hoursPerDay;
         double extraHours;
+        List<DayOfWeek> workingDays = new ArrayList<>();
 
         try {
             System.out.println("Enter the year: ");
@@ -43,9 +47,13 @@ public class MonthlyPayCalculator {
             System.out.println("How many hours were worked additionally or deducted: ");
             extraHours = scanner.nextDouble();
 
+            workingDays.add(DayOfWeek.MONDAY);
+            workingDays.add(DayOfWeek.WEDNESDAY);
+            workingDays.add(DayOfWeek.FRIDAY);
 
-            PayCalculator payCalculator = new PayCalculator(hoursPerDay, hourlyRate, extraHours);
-            double totalPay = payCalculator.calculateMonthlyPay(year, month);
+            PayPeriod payPeriod = new PayPeriod(year, month, workingDays, hoursPerDay, extraHours);
+            PayCalculator payCalculator = new PayCalculator(hourlyRate, payPeriod);
+            double totalPay = payCalculator.calculateMonthlyPay(payPeriod);
 
             Month currentMonth = Month.fromInt(month);
 

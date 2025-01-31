@@ -4,24 +4,29 @@ import java.time.DayOfWeek;
 
 public class PayCalculator {
 
-    private double hourlyRate;
-    private int hoursPerDay;
-    private double extraHours;
+    private final double hourlyRate;
+    private final double hoursPerDay;
+    private final double extraHours;
 
-    public PayCalculator(int hoursPerDay, double hourlyRate, double extraHours) {
+    public PayCalculator(double hourlyRate, PayPeriod payPeriod) {
         this.hourlyRate = hourlyRate;
-        this.hoursPerDay = hoursPerDay;
-        this.extraHours = extraHours;
+        this.hoursPerDay = payPeriod.getHoursWorkedPerDay();
+        this.extraHours = payPeriod.getExtraHours();
     }
 
-    public double calculateMonthlyPay(int year, int month) {
+    public double calculateMonthlyPay(PayPeriod payPeriod) {
         DateCalculator dateCalculator = new DateCalculator();
+        int totalWorkingDays = 0;
 
-        int mondays = dateCalculator.countDaysOfWeek(year, month, DayOfWeek.MONDAY);
-        int wednesdays = dateCalculator.countDaysOfWeek(year, month, DayOfWeek.WEDNESDAY);
-        int fridays = dateCalculator.countDaysOfWeek(year, month, DayOfWeek.FRIDAY);
+        for(int i = 0; i < 7; i++) {
+            if(payPeriod.getDaysOfWeek()[i]) {
+                DayOfWeek dayOfWeek = DayOfWeek.of(i + 1);
+                totalWorkingDays += dateCalculator.countDaysOfWeek(payPeriod.getYear(), payPeriod.getMonth(), dayOfWeek);
+            }
+        }
 
-        double totalHours = ((mondays + wednesdays + fridays) * hoursPerDay) + extraHours;
+        double totalWorkingHours = totalWorkingDays * payPeriod.getHoursWorkedPerDay();
+        double totalHours = totalWorkingHours + payPeriod.getExtraHours();
         return totalHours * hourlyRate;
     }
 }
