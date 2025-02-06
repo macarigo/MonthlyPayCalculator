@@ -18,7 +18,7 @@ function App() {
         setTotalPay(response.data.totalPay);
     } catch (error) {
         console.error("Error:", error);
-        setError("An error occured while calculating payment.");
+        setError("An error occurred while calculating payment.");
     } finally {
         setIsLoading(false);
     }

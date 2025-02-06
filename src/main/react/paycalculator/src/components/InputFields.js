@@ -77,26 +77,6 @@ function InputFields({ onInputChange }) {
         }
     };
 
-    const handleSubmit = () => {
-        const payPeriod = {
-            year: parseInt(year),
-            month: parseInt(month),
-            daysOfWeek: [
-                daysOfWeek.Monday,
-                daysOfWeek.Tuesday,
-                daysOfWeek.Wednesday,
-                daysOfWeek.Thursday,
-                daysOfWeek.Friday,
-                daysOfWeek.Saturday,
-                daysOfWeek.Sunday
-            ],
-            hoursWorkedPerDay: parseFloat(hoursWorkedPerDay),
-            extraHours: parseFloat(extraHours)
-        };
-
-        onInputChange(payPeriod);
-    };
-
     return (
         <div>
             <label htmlFor="year">Insert year: </label>
@@ -249,10 +229,8 @@ function InputFields({ onInputChange }) {
                         onChange={handleCheckboxChange}
                     />
                     Weekdays
-                </label>
+                    </label>
             </div>
-
-            <button onClick={handleSubmit}>Calculate</button>
         </div>
     );
 }
