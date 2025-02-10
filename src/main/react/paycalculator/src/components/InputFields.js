@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function InputFields({ onInputChange }) {
+function InputFields({ onInputChange, isLoading }) {
     const [year, setYear] = useState ('');
     const [month, setMonth] = useState ('');
     const [hourlyRate, setHourlyRate] = useState ('');
@@ -77,162 +77,108 @@ function InputFields({ onInputChange }) {
         }
     };
 
+    const getDaysOfWeekArray = () => {
+        return [
+        daysOfWeek.Monday,
+        daysOfWeek.Tuesday,
+        daysOfWeek.Wednesday,
+        daysOfWeek.Thursday,
+        daysOfWeek.Friday,
+        daysOfWeek.Saturday,
+        daysOfWeek.Sunday,
+        ];
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const formattedPayPeriod = {
+            year: parseInt(year, 10),
+            month:parseInt(month,10),
+            hourlyRate:parseFloat(hourlyRate),
+            hoursWorkedPerDay:parseFloat(hoursWorkedPerDay),
+            extraHours:parseFloat(extraHours),
+            daysOfWeek: getDaysOfWeekArray(),
+        };
+
+        onInputChange(formattedPayPeriod);
+
+    };
+
     return (
-        <div>
-            <label htmlFor="year">Insert year: </label>
-            <input
-                type="number"
-                id="year"
-                name="year"
-                value={year}
-                onChange={handleInputChange}
-            />
-
-            <label htmlFor="month">Insert month: </label>
-            <input
-                type="number"
-                id="month"
-                name="month"
-                value={month}
-                onChange={handleInputChange}
-            />
-
-            <label htmlFor="hourlyRate">Insert hourly rate: </label>
-            <input
-                type="number"
-                id="hourlyRate"
-                name="hourlyRate"
-                value={hourlyRate}
-                onChange={handleInputChange}
-            />
-
-            <label htmlFor="hoursWorked">Insert hours worked per day: </label>
-            <input
-                type="number"
-                id="hoursWorkedPerDay"
-                name="hoursWorkedPerDay"
-                value={hoursWorkedPerDay}
-                onChange={handleInputChange}
-            />
-
-            <label htmlFor="extraHours">Extra hours to add or deduct: </label>
-            <input
-                type="number"
-                id="extraHours"
-                name="extraHours"
-                value={extraHours}
-                onChange={handleInputChange}
-            />
-
+        <form onSubmit={handleSubmit}>
             <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="Monday"
-                        checked={daysOfWeek.Monday}
-                        onChange={handleCheckboxChange}
-                    />
-                    Monday
-                </label>
+                <label htmlFor="year">Insert year: </label>
+                <input
+                    type="number"
+                    id="year"
+                    name="year"
+                    value={year}
+                    onChange={handleInputChange}
+                />
             </div>
 
             <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="Tuesday"
-                        checked={daysOfWeek.Tuesday}
-                        onChange={handleCheckboxChange}
-                    />
-                    Tuesday
-                </label>
+                <label htmlFor="month">Insert month: </label>
+                <input
+                    type="number"
+                    id="month"
+                    name="month"
+                    value={month}
+                    onChange={handleInputChange}
+                />
             </div>
 
             <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="Wednesday"
-                        checked={daysOfWeek.Wednesday}
-                        onChange={handleCheckboxChange}
-                    />
-                    Wednesday
-                </label>
+                <label htmlFor="hourlyRate">Insert hourly rate: </label>
+                <input
+                    type="number"
+                    id="hourlyRate"
+                    name="hourlyRate"
+                    value={hourlyRate}
+                    onChange={handleInputChange}
+                />
             </div>
 
             <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="Thursday"
-                        checked={daysOfWeek.Thursday}
-                        onChange={handleCheckboxChange}
-                    />
-                    Thursday
-                </label>
+                <label htmlFor="hoursWorked">Insert hours worked per day: </label>
+                <input
+                    type="number"
+                    id="hoursWorkedPerDay"
+                    name="hoursWorkedPerDay"
+                    value={hoursWorkedPerDay}
+                    onChange={handleInputChange}
+                />
             </div>
 
             <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="Friday"
-                        checked={daysOfWeek.Friday}
-                        onChange={handleCheckboxChange}
-                    />
-                    Friday
-                </label>
+                <label htmlFor="extraHours">Extra hours to add or deduct: </label>
+                <input
+                    type="number"
+                    id="extraHours"
+                    name="extraHours"
+                    value={extraHours}
+                    onChange={handleInputChange}
+                />
             </div>
-
             <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="Saturday"
-                        checked={daysOfWeek.Saturday}
-                        onChange={handleCheckboxChange}
-                    />
-                    Saturday
-                </label>
-            </div>
+                    {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "All", "Weekdays"].map((day) => (
+                      <label key={day}>
+                        <input
+                          type="checkbox"
+                          name={day}
+                          checked={daysOfWeek[day]}
+                          onChange={handleCheckboxChange}
+                        />
+                        {day}
+                      </label>
+                    ))}
+                  </div>
+                  <button type="submit" disabled={isLoading}>
+                    {isLoading ? 'Calculating...' : 'Calculate'}
+                  </button>
+                </form>
+              );
+            }
 
-            <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="Sunday"
-                        checked={daysOfWeek.Sunday}
-                        onChange={handleCheckboxChange}
-                    />
-                    Sunday
-                </label>
-            </div>
-
-            <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="All"
-                        checked={daysOfWeek.All}
-                        onChange={handleCheckboxChange}
-                    />
-                    All
-                </label>
-            </div>
-
-            <div>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="Weekdays"
-                        checked={daysOfWeek.Weekdays}
-                        onChange={handleCheckboxChange}
-                    />
-                    Weekdays
-                    </label>
-            </div>
-        </div>
-    );
-}
-
-export default InputFields;
+            export default InputFields;

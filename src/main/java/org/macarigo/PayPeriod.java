@@ -1,6 +1,7 @@
 package org.macarigo;
 
 import java.time.DayOfWeek;
+import java.util.Arrays;
 import java.util.List;
 
 public class PayPeriod {
@@ -8,18 +9,20 @@ public class PayPeriod {
     private int year;
     private int month;
     private boolean[] daysOfWeek;
+    private double hourlyRate;
     private double hoursWorkedPerDay;
     private double extraHours;
 
-    public PayPeriod(int year, int month, boolean[] daysOfWeek, double hoursWorkedPerDay, double extraHours) {
+    public PayPeriod(int year, int month, boolean[] daysOfWeek, double hourlyRate, double hoursWorkedPerDay, double extraHours) {
         this.year = year;
         this.month = month;
         this.daysOfWeek = daysOfWeek;
+        this.hourlyRate = hourlyRate;
         this.hoursWorkedPerDay = hoursWorkedPerDay;
         this.extraHours = extraHours;
     }
 
-    public PayPeriod(int year, int month, List<DayOfWeek> workingDays, double hoursWorkedPerDay, double extraHours) {
+    public PayPeriod(int year, int month, List<DayOfWeek> workingDays, double hourlyRate, double hoursWorkedPerDay, double extraHours) {
         this.year = year;
         this.month = month;
         this.daysOfWeek = new boolean[7];
@@ -28,9 +31,12 @@ public class PayPeriod {
             this.daysOfWeek[day.getValue() -1] = true;
         }
 
+        this.hourlyRate = hourlyRate;
         this.hoursWorkedPerDay = hoursWorkedPerDay;
         this.extraHours = extraHours;
     }
+
+    public PayPeriod() {}
 
     public int getYear() {
         return year;
@@ -42,6 +48,10 @@ public class PayPeriod {
 
     public boolean[] getDaysOfWeek() {
         return daysOfWeek;
+    }
+
+    public double getHourlyRate() {
+        return hourlyRate;
     }
 
     public double getHoursWorkedPerDay() {
@@ -64,11 +74,27 @@ public class PayPeriod {
         this.daysOfWeek = daysOfWeek;
     }
 
+    public void setHourlyRate(double hourlyRate) {
+        this.hourlyRate = hourlyRate;
+    }
+
     public void setHoursWorkedPerDay(double hoursWorkedPerDay) {
         this.hoursWorkedPerDay = hoursWorkedPerDay;
     }
 
     public void setExtraHours(double extraHours) {
         this.extraHours = extraHours;
+    }
+
+    @Override
+    public String toString() {
+        return "PayPeriod{" +
+                "year=" + year +
+                ", month=" + month +
+                ", daysOfWeek=" + Arrays.toString(daysOfWeek) +
+                ", hourlyRate=" + hourlyRate +
+                ", hoursWorkedPerDay=" + hoursWorkedPerDay +
+                ", extraHours=" + extraHours +
+                '}';
     }
 }

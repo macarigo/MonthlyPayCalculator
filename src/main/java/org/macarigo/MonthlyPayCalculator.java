@@ -1,5 +1,8 @@
 package org.macarigo;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -7,10 +10,14 @@ import java.util.List;
 import java.util.Scanner;
 
 
+@SpringBootApplication
 public class MonthlyPayCalculator {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        SpringApplication.run(MonthlyPayCalculator.class, args);
+    }
+}
+     /*   Scanner scanner = new Scanner(System.in);
 
         int year;
         int month;
@@ -68,4 +75,4 @@ public class MonthlyPayCalculator {
             scanner.close();
         }
     }
-}
+}*/

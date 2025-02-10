@@ -23,7 +23,8 @@ public class PayController {
 
     @PostMapping
     public ResponseEntity<PayCalculationResponse> calculatePay(@RequestBody PayPeriod payPeriod) {
-        double totalPay = payCalculatorService.calculatePay(payPeriod, payPeriod.getHoursWorkedPerDay());
+        System.out.println("Received pay period: " + payPeriod);
+        double totalPay = payCalculatorService.calculatePay(payPeriod);
         PayCalculationResponse response = new PayCalculationResponse(totalPay);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

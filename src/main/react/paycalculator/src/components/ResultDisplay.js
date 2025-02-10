@@ -1,9 +1,9 @@
 import React from 'react';
 
-function ResultDisplay() {
+function ResultDisplay({ totalPay }) {
     return (
         <div>
-            <h2>Total payment due: </h2>
+            <h2>Total payment due: {totalPay} €</h2>
         </div>
     );
 }

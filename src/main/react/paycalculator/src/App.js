@@ -9,29 +9,26 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState (null);
 
-    const handleSubmit = async (payPeriod) => {
+    const handleSubmitData = async (payPeriod) => {
         setIsLoading(true);
         setError(null);
 
-    try {
-        const response = await axios.post('/api/pay', payPeriod);
-        setTotalPay(response.data.totalPay);
-    } catch (error) {
-        console.error("Error:", error);
-        setError("An error occurred while calculating payment.");
-    } finally {
-        setIsLoading(false);
-    }
-};
-
+        try {
+            const response = await axios.post('http://localhost:8080/api/pay', payPeriod);
+            setTotalPay(response.data.totalPay);
+        } catch (error) {
+            console.error("Error:", error);
+            setError("An error occurred while calculating payment.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
 return (
     <div className="App">
       <h1>Payment Calculator</h1>
-      <InputFields onInputChange={handleSubmit} />
-      <button onClick={handleSubmit} disabled={isLoading}>
-        {isLoading ? 'Calculating...' : 'Calculate'}
-      </button>
+      <InputFields onInputChange={handleSubmitData}
+      isLoading={isLoading} />
       {error && <p className="error">{error}</p>}
       <ResultDisplay totalPay={totalPay} />
     </div>
